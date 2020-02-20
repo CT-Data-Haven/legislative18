@@ -1,0 +1,93 @@
+.Chart {
+  font-family: 'Barlow Semi Condensed';
+  min-height: 400px;
+  min-width: 300px;
+}
+
+
+.Chart div.responsive-container {
+  /* min-height: 400px !important; */
+}
+
+.Chart.Choropleth {
+  /* min-width: 300px; */
+  width: 100%;
+
+}
+
+
+.Chart .leaflet-container {
+  width: 100%;
+  min-height: 500px;
+  margin: 0 auto;
+}
+
+.Chart div.leaflet-control-layers.leaflet-control {
+	visibility: hidden;
+}
+
+.Chart .custom-tip {
+  background-color: #333;
+  color: white;
+  border-color: #333;
+  opacity: 0.85;
+  font-size: 0.95em;
+  font-family: 'Barlow Semi Condensed';
+  padding: 3px;
+  font-weight: 600;
+}
+
+.Chart .custom-tip::before {
+  border-top-color: #333;
+}
+
+.Chart .axis text {
+  fill: #444;
+}
+
+.Chart .axis path {
+  stroke: lightgrey;
+}
+
+.Chart .axis line.axis-baseline {
+  stroke: #bbb;
+  stroke-width: 1px;
+}
+
+.Chart .axis-label text {
+  font-size: 0.9em;
+}
+
+.Chart .axis-title text {
+  font-family: 'Barlow', 'Barlow Semi Condensed', 'Roboto';
+}
+
+.Chart g.direct-label text {
+  font-size: 0.9em;
+  font-weight: 700;
+  text-anchor: end;
+  /* fill: white; */
+}
+
+.Chart g.direct-label.light text {
+  fill: white;
+}
+
+.Chart g.direct-label.dark text {
+  fill: #303030;
+}
+
+.Facet {
+  margin: 4px 0;
+}
+
+.Facet .facet-heading {
+  font-size: 1.0em;
+  font-weight: 500;
+  font-family: 'Barlow';
+  margin-bottom: 2px;
+}
+
+.Facet g.frame-title {
+  display: none;
+}

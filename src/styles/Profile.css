@@ -1,0 +1,34 @@
+.Profile {
+
+}
+
+.Profile table {
+  font-size: 1.1rem;
+}
+
+
+.Profile table thead {
+  display: none;
+}
+
+.Profile div.list-group-flush .list-group-item {
+  padding: 0;
+}
+
+.Profile .infobox {
+  padding: 0.5rem 0.75rem;
+  color: #222;
+  background-color: #fcfcff;
+}
+
+.Profile .infobox ul {
+  margin-bottom: 0;
+}
+
+.Profile .infobox .small {
+  font-size: 90%;
+}
+
+.Profile .infobox .title {
+  font-weight: 500;
+}

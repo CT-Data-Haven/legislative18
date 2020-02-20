@@ -1,0 +1,28 @@
+.Stage {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.Stage h3 {
+  font-size: 1.2rem;
+  padding: 9px;
+}
+
+.Stage.ChartStage, .Stage.ProfileStage {
+  min-height: 480px;
+}
+
+.Stage.TableStage div.card-body {
+  padding: 0;
+}
+
+.Stage .axis-title {
+  color: #444;
+  padding-right: 1rem;
+  font-size: 0.9em;
+  font-family: 'Barlow', 'Barlow Semi Condensed', 'Roboto';
+}
+
+.Stage form {
+  margin-bottom: 0.5em;
+}

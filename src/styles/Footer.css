@@ -1,0 +1,28 @@
+.Footer {
+
+}
+
+.Footer ul li span.source {
+  font-weight: 600;
+}
+
+.Footer img#logo {
+  max-width: 150px;
+  margin-top: 0.8em;
+}
+
+.Footer h3 {
+  font-size: 1.1em;
+}
+
+.Footer .h4 {
+  font-weight: 500;
+}
+
+.Footer hr {
+  width: 50%;
+}
+
+.Footer .alert-light hr {
+  border-top-color: #e7e4e2;
+}
