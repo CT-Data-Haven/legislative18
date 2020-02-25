@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/legislative18/static/css/main.2249dc2e.chunk.css",
+    "main.js": "/legislative18/static/js/main.61494510.chunk.js",
+    "main.js.map": "/legislative18/static/js/main.61494510.chunk.js.map",
+    "runtime-main.js": "/legislative18/static/js/runtime-main.d898facb.js",
+    "runtime-main.js.map": "/legislative18/static/js/runtime-main.d898facb.js.map",
+    "static/css/2.41a59cce.chunk.css": "/legislative18/static/css/2.41a59cce.chunk.css",
+    "static/js/2.626fdc29.chunk.js": "/legislative18/static/js/2.626fdc29.chunk.js",
+    "static/js/2.626fdc29.chunk.js.map": "/legislative18/static/js/2.626fdc29.chunk.js.map",
+    "index.html": "/legislative18/index.html",
+    "precache-manifest.faed78de842bc3d9f589f4fadc37e6b1.js": "/legislative18/precache-manifest.faed78de842bc3d9f589f4fadc37e6b1.js",
+    "service-worker.js": "/legislative18/service-worker.js",
+    "static/css/2.41a59cce.chunk.css.map": "/legislative18/static/css/2.41a59cce.chunk.css.map",
+    "static/css/main.2249dc2e.chunk.css.map": "/legislative18/static/css/main.2249dc2e.chunk.css.map",
+    "static/js/2.626fdc29.chunk.js.LICENSE.txt": "/legislative18/static/js/2.626fdc29.chunk.js.LICENSE.txt",
+    "static/media/logo.png": "/legislative18/static/media/logo.9144a510.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d898facb.js",
+    "static/css/2.41a59cce.chunk.css",
+    "static/js/2.626fdc29.chunk.js",
+    "static/css/main.2249dc2e.chunk.css",
+    "static/js/main.61494510.chunk.js"
+  ]
+}
