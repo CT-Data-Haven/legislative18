@@ -1,6 +1,7 @@
 import React from 'react';
 import { Map, TileLayer, GeoJSON, LayerGroup, LayersControl } from 'react-leaflet';
 import { getBounds, makeGeoLayers, makeGeoJson, makeTooltip } from './utils.js';
+import Legend from './Legend';
 
 import '../styles/Chart.css';
 
@@ -33,7 +34,7 @@ export default class Choropleth extends React.Component {
       .on('mouseover', this.featureHilite)
       .on('mouseout', this.featureUnhilite);
     layer.bindTooltip(() => (
-      makeTooltip(this.props.data, id, this.props.meta)),
+      makeTooltip(id, this.props.data[id].value, this.props.meta.format)),
       { direction: 'top', offset: [0, -20], className: 'custom-tip' }
     );
   };
@@ -59,7 +60,7 @@ export default class Choropleth extends React.Component {
 
     return (
       <div className='Chart Choropleth'>
-        { this.props.toggle }
+        { this.props.children }
         <Map
           key={ this.props.chamber }
           bounds={ bbox }
@@ -99,6 +100,10 @@ export default class Choropleth extends React.Component {
             </Overlay>
           </LayersControl>
         </Map>
+        <Legend
+          colorscale={ this.props.colorscale }
+          meta={ this.props.meta }
+        />
       </div>
     )
   }

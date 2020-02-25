@@ -1,0 +1,39 @@
+.VizContainer {
+  min-height: 400px;
+  min-width: 300px;
+}
+
+
+.VizContainer span.nav-icon {
+  margin-right: 0.3em;
+}
+
+.VizContainer div.RRT__panel {
+  border-width: 0;
+  min-width: 300px;
+}
+
+.VizContainer div.RRT__tab {
+  /* margin: -0.2em 0 0.5em 0; */
+  color: #615b61;
+  background-color: white;
+  padding-top: 0.2em;
+  padding-bottom: 0.3em;
+  border-width: 0;
+}
+
+.VizContainer div.RRT__tab:hover {
+  border-color: #ede6db;
+  background-color: #F8F5F0;
+}
+
+.VizContainer div.RRT__tab--selected {
+  /* color: #625c50; */
+  color: #82317e;
+  font-weight: 600;
+  /* border-color: #625c50; */
+  border-color: #82317e;
+  border-width: 0;
+  border-bottom-width: 3px;
+  border-radius: 2px;
+}

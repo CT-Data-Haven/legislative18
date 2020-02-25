@@ -35,10 +35,20 @@
   font-family: 'Barlow Semi Condensed';
   padding: 3px;
   font-weight: 600;
+  border-radius: 2px;
+  z-index: 500;
+  pointer-events: none;
 }
 
 .Chart .custom-tip::before {
   border-top-color: #333;
+}
+
+.Chart .tooltip-content  {
+  position: relative;
+  /* padding: 4px; */
+  transform: translate(20%, -105%);
+  pointer-events: none;
 }
 
 .Chart .axis text {
@@ -77,6 +87,11 @@
   fill: #303030;
 }
 
+.Chart .chart-annotation g.annotation-note-content {
+  font-size: 0.9em;
+  transform: translate(0.2em, -0.6em);
+}
+
 .Facet {
   margin: 4px 0;
 }
@@ -90,4 +105,17 @@
 
 .Facet g.frame-title {
   display: none;
+}
+
+
+.Chart .ChartHelper {
+  float: right;
+}
+
+.Chart .ChartHelper button {
+  border-radius: 0.5em;
+}
+
+#chart-help-popover {
+  font-family: 'Barlow', 'Barlow Semi Condensed', 'Roboto';
 }

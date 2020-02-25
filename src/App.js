@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useForm, FormContext } from 'react-hook-form';
 import { schemeBuPu as palette } from 'd3-scale-chromatic';
-import { getMappable, firstDistrict, makeMapData, makeChartData, displayIndicator, makeChoroScale, makeQualScales, getProfile, getLegislator, getSubMeta } from './components/utils.js';
+import { getMappable, firstDistrict, makeMapData, makeChartData, makeChoroScale, makeQualScales, getProfile, getLegislator, getSubMeta, makeVizHdr } from './components/utils.js';
+import { FaChartBar, FaGlobeAmericas } from 'react-icons/fa';
 
 import Intro from './components/Intro';
 import Stage from './components/Stage';
 import Controls from './components/Controls';
 import Choropleth from './components/Choropleth';
 import Profile from './components/Profile';
-import TownToggle from './components/TownToggle';
+import Toggle from './components/Toggle';
 import Footer from './components/Footer';
 import Chart from './components/Chart';
 import VizContainer from './components/VizContainer';
@@ -41,14 +42,19 @@ const App = () => {
     chamber: chambers[0],
     indicator: getMappable(meta[chambers[0]][topics[0]])[0].indicator,
     district: firstDistrict(chambers[0]),
-    showTowns: false
+    viz: 'map'
   };
 
   const [topic, setTopic] = useState(initValues.topic);
   const [chamber, setChamber] = useState(initValues.chamber);
   const [indicator, setIndicator] = useState(initValues.indicator);
   const [district, setDistrict] = useState(initValues.district);
-  const [showTowns, setShowTowns] = useState(initValues.showTowns);
+  const [viz, setViz] = useState(initValues.viz);
+
+  const [toggles, setToggles] = useReducer((state, newState) => ({ ...state, ...newState }), {
+    townsToggled: false,
+    ctToggled: false
+  });
 
   const onFormChange = (formData, e) => {
     const { _chamber, _topic, _indicator } = formMethods.getValues();
@@ -61,9 +67,10 @@ const App = () => {
     }
 
     setTopic(_topic);
-    setChamber((prevChamber) => _chamber);
+    // setChamber((prevChamber) => _chamber);
 
     if (e.target.name === '_chamber') {
+      setChamber(_chamber);
       setDistrict(firstDistrict(_chamber));
     }
   };
@@ -72,8 +79,17 @@ const App = () => {
     setDistrict(layer.feature.properties.id);
   };
 
-  const onTownToggle = (e) => {
-    setShowTowns(e.target.checked);
+  const onToggle = ({ target }) => {
+    const { id, checked } = target;
+    setToggles({ [id]: checked });
+  };
+
+  const onDotClick = (e) => {
+    setDistrict(e.location);
+  };
+
+  const onVizChange = (e) => {
+    setViz(e);
   };
 
   const topicMeta = meta[chamber][topic];
@@ -119,27 +135,43 @@ const App = () => {
             <Stage
               location={ district }
               chamber={ chamber }
-              lbl={ displayIndicator(topicMeta['indicators'], indicator) }
+              lbl={ makeVizHdr(viz, topicMeta, indicator) }
               type='chart'
             >
-              <VizContainer>
+              <VizContainer
+                tabs={{
+                  map: { title: 'Show map', icon: <FaGlobeAmericas /> },
+                  chart: { title: 'Show chart', icon: <FaChartBar /> }
+                }}
+                onChange={ onVizChange }
+              >
 
                 <Choropleth
+                  key='map'
                   chamber={ chamber }
                   shape={ shapes[chamber] }
                   data={ mapData }
                   colorscale={ makeChoroScale(mapData, palette, 5) }
                   onClick={ onFeatureClick }
-                  toggle={ <TownToggle onChange={ onTownToggle } /> }
                   townShp={ shapes['towns'] }
-                  showTowns={ showTowns }
+                  showTowns={ toggles.townsToggled }
                   meta={ getSubMeta(topicMeta.indicators, indicator) }
-                />
+                >
+                  <Toggle
+                    id='townsToggled'
+                    label='Show town boundaries'
+                    onChange={ onToggle }
+                    checked={ toggles.townsToggled }
+                  />
+                </Choropleth>
 
                 <Chart
+                  key='chart'
                   data={ chartData }
                   meta={ mappable }
                   scales={ makeQualScales(district, palette[4]) }
+                  onClick={ onDotClick }
+                  district={ district }
                 />
 
               </VizContainer>
@@ -156,11 +188,18 @@ const App = () => {
               type='profile'
             >
               <Profile
-                data={ getProfile(data[chamber][topic], district, topicMeta.indicators) }
+                data={ getProfile(data[chamber][topic], district, topicMeta.indicators, toggles.ctToggled) }
                 legislator={ getLegislator(legislators[chamber], district) }
                 title={ titles[chamber] }
                 towns={ xwalk[chamber][district] }
-              />
+              >
+                <Toggle
+                  id='ctToggled'
+                  label='Compare to CT values'
+                  onChange={ onToggle }
+                  checked={ toggles.ctToggled }
+                />
+              </Profile>
 
             </Stage>
           </Col>

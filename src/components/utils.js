@@ -5,6 +5,11 @@ import { format } from 'd3-format';
 import { ckmeans } from 'simple-statistics';
 import Color from 'color';
 
+///////////// general utilities
+const _unbox = (data) => (
+  data.length > 1 ? data : data[0]
+);
+
 ///////////// filtering
 const _filterByKey = (data, key, value, first = true) => (
   first ? _.find(data, { [key]: value }) : _.filter(data, { [key]: value })
@@ -36,18 +41,25 @@ const makeTitle = (lbl, capAll = false) => {
   return capAll ? _.startCase(wrds) : _.upperFirst(wrds);
 };
 
-const displayIndicator = (indicators, indicator) => {
-  const meta = getSubMeta(indicators, indicator);
-  return _.values(meta).length ? meta.display : '';
+const stripZeroes = (location, keepChamber = false) => {
+  const numbers = location.match(/\d+/);
+  if (_.isNull(numbers)) {
+    return location;
+  } else {
+    if (keepChamber) {
+      return `${ location.charAt(0) }${ +numbers }`;
+    } else {
+      return +numbers;
+    }
+  }
 };
 
-const stripZeroes = (location) => {
-  const numbers = location.match(/\d+/);
-  if (numbers.length) {
-    // return `${ location.charAt(0) }${ +numbers }`;
-    return +numbers;
+const makeVizHdr = (viz, meta, indicator) => {
+  if (viz === 'map') {
+    const submeta = _filterByKey(meta.indicators, 'indicator', indicator);
+    return _.values(submeta).length ? submeta.display : '';
   } else {
-    return location;
+    return `${ meta.display } indicators`;
   }
 };
 
@@ -75,17 +87,56 @@ const makeChartData = (topicData, topicMeta, district) => {
   const indicators = _.map(getMappable(topicMeta), 'indicator');
   return _.chain(topicData)
     .map((d) => _.pick(d, ['level', 'location', ...indicators]))
-    .filter({ level: 'district' })
     .sortBy([(d) => d.location === district])
+    .groupBy('level')
+    .mapValues(_unbox)
     .value();
 };
 
-const getProfile = (data, name, meta) => {
-  const locData = _filterByKey(data, 'location', name);
-  return locData ? meta.map((d) => ({
-    indicator: d.display,
-    value: fmt(d.format)(locData[d.indicator])
-  })) : [];
+const getProfile = (data, location, meta, compareCt = false) => {
+  let profData;
+  if (compareCt) {
+    profData = _.filter(data, (d) => (d.location === location || d.level === 'state'));
+  } else {
+    profData = [_filterByKey(data, 'location', location)];
+  }
+  profData = _.compact(profData);
+  if (profData.length === 0) {
+    return [];
+  } else {
+    const locations = _.map(profData, 'location').map((l) => stripZeroes(l, true));
+    const wide = _.map(meta, (m) => {
+      const vals = _.chain(profData)
+        .map((d) => d[m.indicator])
+        .map(fmt(m.format))
+        .value();
+      return {
+        indicator: m.display,
+        ..._.zipObject(locations, vals)
+      };
+    });
+    return wide;
+    // return [];
+  }
+};
+
+const makeProfColumns = (row) => {
+  const cols = _.chain(row)
+    .keys()
+    .pull('indicator')
+    .map((c) => ({
+      dataField: c,
+      text: _.upperFirst(c),
+      align: 'right',
+      classes: 'text-right'
+    }))
+    .value();
+  const indicatorCol = {
+    dataField: 'indicator',
+    text: 'Indicator',
+    classes: 'table-header-col'
+  };
+  return [indicatorCol, ...cols];
 };
 
 //////////////// geography
@@ -121,9 +172,9 @@ const makeChoroScale = (data, scheme, nBrks) => {
   }
 };
 
-const makeQualScales = (district, scheme, minStroke = 0, maxStroke = 4) => {
+const makeQualScales = (district, scheme, minStroke = 0, maxStroke = 2) => {
   const color = Color(_.last(scheme));
-  const desat = color.desaturate(0.95).lighten(0.4).alpha(0.8).string();
+  const desat = color.desaturate(0.95).lighten(0.3).alpha(0.7).string();
   const hilite = {
     fill: color,
     strokeWidth: maxStroke,
@@ -131,7 +182,7 @@ const makeQualScales = (district, scheme, minStroke = 0, maxStroke = 4) => {
   };
   const other = {
     fill: desat,
-    strokeWidth: 0.5,
+    // strokeWidth: 0.5,
     stroke: '#efefef'
   };
   const both = {
@@ -139,15 +190,13 @@ const makeQualScales = (district, scheme, minStroke = 0, maxStroke = 4) => {
     // r: 5
   };
   return (
-    (d) => (d.location === district ? { ...hilite, ...both } : { ...other, ...both })
+    (d, dist) => (d.location === dist ? { ...hilite, ...both } : { ...other, ...both })
   );
 };
 
-const makeTooltip = (data, name, meta) => {
-  const val = data[name] ? data[name].value : null;
-  const format = meta.format;
-  return `Dist. ${ stripZeroes(name) }: ${ fmt(format)(val) }`;
-};
+const makeTooltip = (location, value, format) => (
+  `Dist. ${ stripZeroes(location) }: ${ fmt(format)(value) }`
+);
 
 const getExtent = (data, indicator, pad = 0.08) => {
   const values = _.map(data, indicator);
@@ -157,11 +206,28 @@ const getExtent = (data, indicator, pad = 0.08) => {
   return [min - (range * pad), max + (range * pad)];
 };
 
+const makeAvgAnnotation = (value, format, lbl = 'CT avg', dy = -10) => ({
+  type: 'r',
+  value: value,
+  className: 'chart-annotation',
+  color: '#333',
+  dy: dy,
+  dx: 0,
+  // disable: ['connector'],
+  connector: { end: 'none' },
+  note: {
+    label: `${ lbl }: ${ fmt(format)(value) }`,
+    align: 'top',
+    // padding: -10,
+    orientation: 'topBottom',
+    lineType: null
+  }
+});
+
 ///////////////// export
 
 export {
   compileHeader,
-  displayIndicator,
   firstDistrict,
   fmt,
   getBounds,
@@ -170,13 +236,16 @@ export {
   getMappable,
   getProfile,
   getSubMeta,
+  makeAvgAnnotation,
   makeChartData,
   makeChoroScale,
   makeGeoJson,
   makeGeoLayers,
   makeMapData,
+  makeProfColumns,
   makeQualScales,
   makeTitle,
   makeTooltip,
+  makeVizHdr,
   stripZeroes
 };
