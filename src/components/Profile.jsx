@@ -9,17 +9,17 @@ const Profile = (props) => (
   <div className='Profile' id='profile'>
     <ListGroup variant='flush'>
       { props.legislator &&
-        <ListGroup.Item>
+        <ListGroup.Item key='prof-district-info'>
           <DistrictInfo { ...props }>
             { props.children }
           </DistrictInfo>
         </ListGroup.Item>
       }
-      <ListGroup.Item>
+      <ListGroup.Item key='prof-table'>
         <ProfileTable { ...props } />
       </ListGroup.Item>
       { props.towns &&
-        <ListGroup.Item>
+        <ListGroup.Item key='prof-geography'>
           <TownInfo { ...props } />
         </ListGroup.Item>
       }
@@ -46,18 +46,8 @@ const ProfileTable = (props) => (
       headerClasses='thead-light'
       rowClasses={ (row, i) => `row-${ row.level }` }
       bordered={ false }
-      keyField={ 'id' }
+      keyField={ 'indicator' }
       data={ props.data }
-      // columns={ [{
-      //   dataField: 'indicator',
-      //   text: 'Indicator',
-      //   classes: 'table-header-col'
-      // }, {
-      //   dataField: 'value',
-      //   text: 'Value',
-      //   align: 'right',
-      //   classes: 'text-right'
-      // }] }
       columns={ makeProfColumns(props.data[0]) }
       wrapperClasses='table-responsive'
     />

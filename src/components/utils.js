@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as topojson from 'topojson-client';
-import { scaleThreshold, scaleOrdinal } from 'd3-scale';
+import { scaleThreshold } from 'd3-scale';
 import { format } from 'd3-format';
 import { ckmeans } from 'simple-statistics';
 import Color from 'color';

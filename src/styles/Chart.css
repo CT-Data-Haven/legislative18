@@ -109,7 +109,7 @@
 
 
 .Chart .ChartHelper {
-  float: right;
+  /* float: right; */
 }
 
 .Chart .ChartHelper button {

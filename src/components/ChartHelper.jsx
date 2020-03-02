@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Popover, OverlayTrigger } from 'react-bootstrap';
 
 const ChartHelper = () => (
-  <div className='ChartHelper'>
+  <div className='ChartHelper float-right'>
     <OverlayTrigger trigger='click' placement='bottom' overlay={ popover }>
       <Button variant='outline-info' size='sm'>About</Button>
     </OverlayTrigger>
