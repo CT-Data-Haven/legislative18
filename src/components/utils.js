@@ -143,7 +143,7 @@ const makeProfColumns = (row) => {
 //////////////// metadata & url handling
 
 const makeDownloads = (id, chamber, year = 2018) => ({
-  gh: `https://github.com/CT-Data-Haven/legis_data2018/blob/master/to_distro/${ chamber }_df_basic_profile_2018.csv`,
+  gh: `https://github.com/CT-Data-Haven/legis_data2018/blob/master/to_distro/${ chamber }_basic_profile_2018.csv`,
   dw: 'https://data.world/camille86/legislativedata',
   dl: `https://query.data.world/s/${ id }`
 });
