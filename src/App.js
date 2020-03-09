@@ -20,6 +20,7 @@ import './App.css';
 import meta from './data/legislative_meta_2018.json';
 import data from './data/legislative_wide_2018.json';
 import legislators from './data/legislators.json';
+import sources from './data/sources_meta.json';
 import xwalk from './data/town_lookup.json';
 const shapes = {
   house: require('./shapes/house_topo.json'),
@@ -122,6 +123,7 @@ const App = () => {
                 chambers={ chambers }
                 meta={ meta[chamber] }
                 onChange={ formMethods.handleSubmit(onFormChange) }
+                viz={ viz }
               />
             </FormContext>
           </Col>
@@ -205,16 +207,16 @@ const App = () => {
           </Col>
         </Row>
 
-        { /* DISTRICT INFO */ }
-        <Row>
-          <Col>
-
-          </Col>
-        </Row>
+        
 
         <Row>
           <Col>
-            <Footer />
+            <Footer
+              chamber={ chamber }
+              district={ district }
+              sources={ sources.sources }
+              dwId={ sources.dwurls[chamber] }
+            />
           </Col>
         </Row>
       </Container>

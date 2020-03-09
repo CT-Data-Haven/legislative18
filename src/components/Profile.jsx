@@ -44,7 +44,7 @@ const ProfileTable = (props) => (
       bootstrap4
       classes='table'
       headerClasses='thead-light'
-      rowClasses={ (row, i) => `row-${ row.level }` }
+      rowClasses={ (row, i) => row.type === 'm' ? 'prof-row-nudge' : 'prof-row'}
       bordered={ false }
       keyField={ 'indicator' }
       data={ props.data }

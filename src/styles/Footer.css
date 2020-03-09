@@ -1,5 +1,5 @@
-.Footer {
-
+.Footer .alert-light {
+  color: #444;
 }
 
 .Footer ul li span.source {
@@ -10,7 +10,10 @@
   max-width: 150px;
   margin-top: 0.8em;
 }
-
+.Footer h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+}
 .Footer h3 {
   font-size: 1.1em;
 }

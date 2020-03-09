@@ -4,7 +4,7 @@
 
 .Profile table {
   font-size: 1.1rem;
-  margin-bottom: 0.2em;
+  margin-bottom: 0;
 }
 
 
@@ -26,6 +26,11 @@
   margin-bottom: 0;
 }
 
+.Profile .infobox p {
+  margin-top: 0.8em;
+  margin-bottom: 0.2em;
+}
+
 .Profile .infobox .small {
   font-size: 90%;
 }
@@ -34,11 +39,10 @@
   font-weight: 500;
 }
 
-.Profile .row-state {
-  background-color: #fcfcfc;
-  font-style: italic;
+.Profile .prof-row-nudge {
+  background-color: #edf3f5;
 }
 
-.Profile tr.row-state td:nth-child(1) {
-  padding-left: 1.2em;
+.Profile .prof-row-nudge :first-child {
+  padding-left: 1.5em;
 }

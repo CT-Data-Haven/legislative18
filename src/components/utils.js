@@ -112,6 +112,7 @@ const getProfile = (data, location, meta, compareCt = false) => {
         .value();
       return {
         indicator: m.display,
+        type: m.type,
         ..._.zipObject(locations, vals)
       };
     });
@@ -123,7 +124,7 @@ const getProfile = (data, location, meta, compareCt = false) => {
 const makeProfColumns = (row) => {
   const cols = _.chain(row)
     .keys()
-    .pull('indicator')
+    .pull('indicator', 'type')
     .map((c) => ({
       dataField: c,
       text: _.upperFirst(c),
@@ -138,6 +139,18 @@ const makeProfColumns = (row) => {
   };
   return [indicatorCol, ...cols];
 };
+
+//////////////// metadata & url handling
+
+const makeDownloads = (id, chamber, year = 2018) => ({
+  gh: `https://github.com/CT-Data-Haven/legis_data2018/blob/master/to_distro/${ chamber }_df_basic_profile_2018.csv`,
+  dw: 'https://data.world/camille86/legislativedata',
+  dl: `https://query.data.world/s/${ id }`
+});
+
+const makeHandoutUrl = (chamber, district, year = 2018) => (
+  `https://github.com/CT-Data-Haven/legis_data2018/raw/master/handouts/${ chamber }/${ year}_profile_${ district }.pdf`
+);
 
 //////////////// geography
 const getBounds = (geo) => {
@@ -239,8 +252,10 @@ export {
   makeAvgAnnotation,
   makeChartData,
   makeChoroScale,
+  makeDownloads,
   makeGeoJson,
   makeGeoLayers,
+  makeHandoutUrl,
   makeMapData,
   makeProfColumns,
   makeQualScales,

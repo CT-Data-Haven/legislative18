@@ -39,7 +39,7 @@ const Controls = (props) => {
           <Col lg={ 4 } md={ 6 }>
             <Form.Group controlId='_indicator'>
               <Form.Label>Select an indicator</Form.Label>
-              <Form.Control as='select' name='_indicator' className='custom-select' ref={ register } onChange={ props.onChange }>
+              <Form.Control as='select' name='_indicator' className='custom-select' ref={ register } onChange={ props.onChange } disabled={ props.viz !== 'map' }>
                 { props.indicators.map((d) => (
                   <option key={ `indicator-${ d.indicator }` } value={ d.indicator }>{ d.display }</option>
                 )) }
