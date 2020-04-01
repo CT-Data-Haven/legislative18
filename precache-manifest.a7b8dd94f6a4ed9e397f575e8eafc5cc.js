@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0c8ccf6ba70fde2458ede16c6daa1781",
+    "revision": "2f033d739ca556ad18f7309aa38d31ee",
     "url": "/legislative18/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/legislative18/static/css/2.a19df273.chunk.css"
   },
   {
-    "revision": "ab268027a4d46af2a900",
+    "revision": "deee89bbb3f67cb2b354",
     "url": "/legislative18/static/css/main.6a31d688.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/legislative18/static/js/2.ecc18865.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ab268027a4d46af2a900",
-    "url": "/legislative18/static/js/main.6156cb99.chunk.js"
+    "revision": "deee89bbb3f67cb2b354",
+    "url": "/legislative18/static/js/main.d4edf994.chunk.js"
   },
   {
     "revision": "1fd6181d459c94b6966c",
