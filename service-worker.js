@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/legislative18/precache-manifest.a7b8dd94f6a4ed9e397f575e8eafc5cc.js"
+  "/legislative18/precache-manifest.93341bad6dea1574b865b5d3627d237c.js"
 );
 
 self.addEventListener('message', (event) => {
